@@ -1,0 +1,162 @@
+CREATE (GM:Producent {nazwa: "General Motors" , siedziba :"USA" , pracownicy :207000,fabryki:101 ,dochod:150.3 ,produkcja:9267000 ,sprzedaz:9026000  })
+CREATE (Volkswagen:Producent {nazwa:"Volkswagen" , siedziba :"Niemcy" , pracownicy :501956,fabryki:94 ,dochod:221.5 ,produkcja: 8494280,sprzedaz:8361294  })
+CREATE (Toyota:Producent {nazwa:"Toyota" , siedziba :"Japonia" , pracownicy :317716,fabryki:65 ,dochod:226.6 ,produkcja:7169721 ,sprzedaz:7948000  })
+CREATE (Hyundai:Producent {nazwa:"Hyundai" , siedziba :"Południowa Korea" , pracownicy :127000,fabryki:32 ,dochod:98.9 ,produkcja:5800000 ,sprzedaz:6600000  })
+CREATE (Ford:Producent {nazwa:"Ford" , siedziba :"USA" , pracownicy :164000,fabryki:76 ,dochod:136.3 ,produkcja:5654000 ,sprzedaz:5695000  })
+CREATE (Nissan:Producent {nazwa:"Nissan" , siedziba :"Japonia" , pracownicy :155099,fabryki:37 ,dochod:100.6 ,produkcja:4214959 ,sprzedaz:4669981  })
+CREATE (FIAT:Producent {nazwa:"FIAT" , siedziba :"Włochy" , pracownicy :222021,fabryki:177 ,dochod:116.5 ,sprzedaz:4367244  })
+CREATE (SAIC:Producent {nazwa:"SAIC" , siedziba :"Chiny" , pracownicy :70300 ,dochod:46.6 ,produkcja:3620800 ,sprzedaz:4011775  })
+CREATE (PSA:Producent {nazwa:"PSA" , siedziba :"Francja" , pracownicy :205345,fabryki:33 ,dochod:83.3 ,produkcja:3582470 ,sprzedaz: 3549416 })
+CREATE (Honda:Producent {nazwa:"Honda" , siedziba :"Japonia" , pracownicy :180000,fabryki:70 ,dochod:112 ,sprzedaz:3095000  })
+CREATE (Renault:Producent {nazwa:"Renault" , siedziba :"Francja" , pracownicy :128322,dochod:59.3 ,sprzedaz:2700000  })
+CREATE (Dongfeng:Producent {nazwa:"Dongfeng" , siedziba :"Chiny" , pracownicy :120000,dochod:51 ,sprzedaz:2615063  })
+CREATE (FAW:Producent {nazwa:"FAW" , siedziba :"Chiny" , pracownicy :118000,dochod:43.2 ,sprzedaz:2600000  })
+CREATE (Suzuki:Producent {nazwa:"Suzuki" , siedziba :"Japonia" , pracownicy :51503,fabryki:35 ,dochod:30.2 ,produkcja:2878000 ,sprzedaz:2500000  })
+CREATE (Daimler:Producent {nazwa:"Daimler" , siedziba :"Niemcy" , pracownicy :271370,fabryki:66 ,dochod:148 ,produkcja:2137243 ,sprzedaz: 2111106 })
+CREATE (Changan:Producent {nazwa:"Changan" , siedziba :"Chiny" , pracownicy :50000,dochod:21.2 ,produkcja:2010000 ,sprzedaz:1851500  })
+CREATE (BMW:Producent {nazwa:"BMW" , siedziba :"Niemcy" , pracownicy :100306,fabryki:25 ,dochod:95.8 ,produkcja:1668982 ,sprzedaz: 1688982 })
+
+CREATE
+(Bosch:Dostawca{nazwa:"Bosch",siedziba:"Niemcy",pracownicy: 303000, dochod: 71.5}),
+(Continental:Dostawca{nazwa:"Continental",siedziba:"Niemcy",pracownicy: 163788, dochod: 42.4}),
+(Denso:Dostawca{nazwa:"Denso", siedziba:"Japonia",pracownicy: 123165, dochod: 35.7}),
+(Bridgestone:Dostawca{nazwa:"Bridgestone",siedziba:"Japonia",pracownicy: 143124, dochod: 37.9}),
+(Michelin:Dostawca{nazwa:"Michelin",siedziba:"Francja",pracownicy: 115000, dochod: 28.8}),
+(Magna:Dostawca{nazwa:"Magna",siedziba:"Canada",pracownicy: 108000, dochod: 28.7}),
+(JhonsonControls:Dostawca{nazwa:"JhonsonControls",siedziba:"USA",pracownicy: 162000, dochod: 40.8}),
+(Aisin:Dostawca{nazwa:"Aisin",siedziba:"Japonia",pracownicy: 74671, dochod: 25.5}),
+(Goodyear:Dostawca{nazwa:"Goodyear",siedziba:"USA",pracownicy: 73000, dochod: 22.8}),
+(Faurecia:Dostawca{nazwa:"Faurecia",siedziba:"Francja",pracownicy: 84719, dochod: 22.5})
+
+
+CREATE
+(Continental)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Faurecia),
+(Continental)-[:KOOPERACJA{typ:"produkcja"}]->(Faurecia),
+(Continental)-[:KOOPERACJA{typ:"infrastruktura"}]->(Faurecia),
+(Bosch)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Michelin),
+(Nissan)-[:KOOPERACJA{typ:"produkcja"}]->(Renault),
+(Renault)-[:KOOPERACJA{typ:"produkcja"}]->(Suzuki),
+(Nissan)-[:KOOPERACJA{typ:"produkcja"}]->(Suzuki),
+(Volkswagen)-[:KOOPERACJA{typ:"produkcja"}]->(Daimler),
+(Daimler)-[:KOOPERACJA{typ:"produkcja"}]->(FIAT),
+(FIAT)-[:KOOPERACJA{typ:"produkcja"}]->(GM),
+(FIAT)-[:KOOPERACJA{typ:"produkcja"}]->(Volkswagen),
+(GM)-[:KOOPERACJA{typ:"produkcja"}]->(Renault),
+(FIAT)-[:KOOPERACJA{typ:"produkcja"}]->(PSA),
+(PSA)-[:KOOPERACJA{typ:"produkcja"}]->(BMW),
+(BMW)-[:KOOPERACJA{typ:"produkcja"}]->(Toyota),
+(Suzuki)-[:KOOPERACJA{typ:"produkcja"}]->(FIAT),
+(FIAT)-[:KOOPERACJA{typ:"produkcja"}]->(Ford),
+(GM)-[:KOOPERACJA{typ:"produkcja"}]->(SAIC),
+(GM)-[:KOOPERACJA{typ:"produkcja"}]->(PSA),
+(BMW)-[:KOOPERACJA{typ:"infrastruktura"}]->(Daimler),
+(Ford)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Toyota),
+(Ford)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(PSA),
+(Ford)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(FIAT),
+(GM)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(SAIC),
+(GM)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(PSA),
+(GM)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Daimler),
+(GM)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Toyota),
+(GM)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Hyundai),
+(GM)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Honda),
+(GM)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Ford),
+(Daimler)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Toyota),
+(Daimler)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Hyundai),
+(Daimler)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Honda),
+(Daimler)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Ford),
+(Toyota)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Hyundai),
+(Toyota)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Honda),
+(Toyota)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Ford),
+(Hyundai)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Honda),
+(Hyundai)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Ford),
+(Honda)-[:KOOPERACJA{typ:"badania_i_rozwoj"}]->(Ford),
+(Bosch)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(Daimler),
+(Bosch)-[:JOINTVENTURES{typ:"produkcja"}]->(Daimler),
+(Dongfeng)-[:JOINTVENTURES{typ:"produkcja"}]->(PSA),
+(Dongfeng)-[:JOINTVENTURES{typ:"infrastruktura"}]->(PSA),
+(Dongfeng)-[:JOINTVENTURES{typ:"infrastruktura"}]->(Nissan),
+(Dongfeng)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(Nissan),
+(Dongfeng)-[:JOINTVENTURES{typ:"produkcja"}]->(Honda),
+(BMW)-[:JOINTVENTURES{typ:"infrastruktura"}]->(PSA),
+(BMW)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(PSA),
+(BMW)-[:JOINTVENTURES{typ:"produkcja"}]->(PSA),
+(Toyota)-[:JOINTVENTURES{typ:"produkcja"}]->(PSA),
+(Toyota)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(PSA),
+(Toyota)-[:JOINTVENTURES{typ:"produkcja"}]->(FAW),
+(FAW)-[:JOINTVENTURES{typ:"produkcja"}]->(GM),
+(FAW)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(GM),
+(FAW)-[:JOINTVENTURES{typ:"infrastruktura"}]->(GM),
+(FAW)-[:JOINTVENTURES{typ:"produkcja"}]->(Volkswagen),
+(Volkswagen)-[:JOINTVENTURES{typ:"produkcja"}]->(SAIC),
+(Volkswagen)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(SAIC),
+(SAIC)-[:JOINTVENTURES{typ:"produkcja"}]->(FIAT),
+(SAIC)-[:JOINTVENTURES{typ:"infrastruktura"}]->(FIAT),
+(SAIC)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(FIAT),
+(SAIC)-[:JOINTVENTURES{typ:"produkcja"}]->(Changan),
+(SAIC)-[:JOINTVENTURES{typ:"infrastruktura"}]->(Changan),
+(FIAT)-[:JOINTVENTURES{typ:"produkcja"}]->(PSA),
+(FIAT)-[:JOINTVENTURES{typ:"produkcja"}]->(Suzuki),
+(FIAT)-[:JOINTVENTURES{typ:"produkcja"}]->(Changan),
+(FIAT)-[:JOINTVENTURES{typ:"infrastruktura"}]->(Changan),
+(PSA)-[:JOINTVENTURES{typ:"produkcja"}]->(Changan),
+(PSA)-[:JOINTVENTURES{typ:"infrastruktura"}]->(Changan),
+(PSA)-[:JOINTVENTURES{typ:"infrastruktura"}]->(GM),
+(SAIC)-[:JOINTVENTURES{typ:"badania_i_rozwoj"}]->(GM),
+(SAIC)-[:JOINTVENTURES{typ:"infrastruktura"}]->(GM),
+(SAIC)-[:JOINTVENTURES{typ:"produkcja"}]->(GM),
+(Changan)-[:JOINTVENTURES{typ:"infrastruktura"}]->(Ford),
+(Changan)-[:JOINTVENTURES{typ:"produkcja"}]->(Suzuki),
+(Changan)-[:JOINTVENTURES{typ:"infrastruktura"}]->(Suzuki)
+
+CREATE
+(Suzuki)-[:OWNS{}]->(Volkswagen),
+(SAIC)-[:OWNS{}]->(GM),
+(Volkswagen)-[:OWNS{procent:19.9}]->(Suzuki),
+(Daimler)-[:OWNS{procent:3.1}]->(Renault),
+(Daimler)-[:OWNS{procent:3.1}]->(Nissan),
+(Renault)-[:OWNS{procent:1.55}]->(Daimler),
+(Renault)-[:OWNS{procent:43.4}]->(Nissan),
+(Nissan)-[:OWNS{procent:15}]->(Renault),
+(Toyota)-[:OWNS{procent:22.7}]->(Denso),
+(Toyota)-[:OWNS{procent:22.7}]->(Aisin),
+(PSA)-[:OWNS{procent:57.4}]->(Faurecia),
+(GM)-[:OWNS{procent:7}]->(PSA),
+(GM)-[:OWNS{procent:10}]->(SAIC)
+
+----------------------------------------------
+
+--2
+MATCH (manuf:Producent)
+WHERE manuf.produkcja > manuf.sprzedaz
+RETURN manuf.nazwa AS nazwa, manuf.produkcja-manuf.sprzedaz AS Nadprodukcja
+ORDER BY Nadprodukcja DESC
+
+--3 ERROR
+MATCH (manuf:Producent)-[:OWNS]->(x)
+RETURN manuf.nazwa AS Nazwa, collect((x.nazwa)) AS Posiada
+ORDER BY Nazwa
+
+--4
+MATCH (manuf:Producent)-[:KOOPERACJA]-(x)
+RETURN manuf.nazwa AS Nazwa, COUNT(DISTINCT(x)) AS WspolpracujaceFirmy, COLLECT(DISTINCT(x.nazwa)) AS Firmy
+ORDER BY WspolpracujaceFirmy DESC, Nazwa ASC
+
+--5
+MATCH (manufacturer:Producent)-[:JOINTVENTURES]-(m:Producent)
+WITH manufacturer,filter (i in collect(DISTINCT(m)) WHERE i.siedziba="Japonia") AS japonscyProducenci
+WHERE length(japonscyProducenci)>0 and manufacturer.siedziba<>"Japonia"
+RETURN manufacturer.nazwa AS Producent, extract(x in japonscyProducenci|x.nazwa) AS JaponscyProducenci
+
+--6 ERROR
+MATCH (a:Producent)-[:OWNS]->(b:Producent)-[:OWNS]->(c:Producent)-[:OWNS]->(a)
+RETURN a.nazwa AS Firma
+
+--7
+MATCH (company)
+RETURN company.nazwa AS Firma, ROUND(company.dochod*1000000/company.pracownicy) AS ThousandsByEmploye
+ORDER BY ThousandsByEmploye DESC
+
+--8
+MATCH (manuf:Producent), (manuf2:Producent)
+RETURN manuf.nazwa AS Producent, ROUND(manuf.sprzedaz*100.0/(SUM(manuf2.sprzedaz))) AS Procent
+ORDER BY Procent DESC
