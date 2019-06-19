@@ -1,9 +1,9 @@
 I. Main Menu Plan:
     1. Drone Management
-        1) Summary
+        1) Summary [OK]
             - droneSummary()
             
-        2) Add new drone
+        2) Add new drone [OK]
             - droneAddNew()
             
         3) Delete drone
@@ -39,8 +39,8 @@ I. Main Menu Plan:
             - packageUpdateStatus()
             - droneUpdateRelationship()
             
-    3. Refresh data
-    4. Quit program
+    4. Refresh data
+    5. Quit program
     
 II. Variables:
 - oldDronesDataFrame
