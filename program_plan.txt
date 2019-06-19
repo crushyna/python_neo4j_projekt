@@ -1,0 +1,54 @@
+I. Main Menu Plan:
+    1. Drone Management
+        1) Summary
+            - droneSummary()
+            
+        2) Add new drone
+            - droneAddNew()
+            
+        3) Delete drone
+            - droneDelete()
+            
+        4) Change drone location
+            - droneUpdateLoc()
+            
+    2. Location Summary
+        1) Summary
+            - locationSummary()
+            
+        2) Skybase list
+            - locationSkybases()
+            
+    3. Send a package!
+        1) Define package
+            - packageSetWeight()
+            
+        2) Select drone
+            - packageFitToDrone()
+            
+        3) Define start point
+            - packageSetStart()
+            
+        4) Define destination
+            - packateSetDest()
+            
+        5) Calculate path
+            - packageCalculatePath()
+            
+        6) Send!
+            - packageUpdateStatus()
+            - droneUpdateRelationship()
+            
+    3. Refresh data
+    4. Quit program
+    
+II. Variables:
+- oldDronesDataFrame
+- currentDronesDataFrame
+
+    Drones:
+        - dronesDF
+    Locations:
+        - locationsDF
+    Package:
+        - packageDF

@@ -1,0 +1,8 @@
+Dodać do API:
+- parametryzacja
+- dodawanie i usuwanie danych z bazy
+- traversal framework
+- zapis danych do obiektu, pliku
+
+Sprawozdanie:
+Implementacja: schemat jako typy węzłów, atrybuty i połączenia
