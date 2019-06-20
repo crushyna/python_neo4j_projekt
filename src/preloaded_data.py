@@ -30,3 +30,15 @@ def getBasesNames():
         ''')
         df = pd.DataFrame(result.data())
         return list(df['location_name'])
+
+def getPackagesList():
+    with driver.session() as session:
+        result = session.run('''
+        MATCH (n:Package) 
+        RETURN n.name AS package_name
+        ''')
+        df = pd.DataFrame(result.data())
+        if df.empty:
+                return ("No packages defined! \n")
+        else:
+                return list(df['package_name'])

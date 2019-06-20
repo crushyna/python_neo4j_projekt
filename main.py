@@ -1,16 +1,24 @@
 import pandas as pd
 import time
-#from neo4j import GraphDatabase
 from src.preloaded_data import getDroneNames
 from src.preloaded_data import getLocationNames
 from src.preloaded_data import getBasesNames
-from src.drone_management import getDronesSummary
-from src.drone_management import getNewDroneSummary
-from src.drone_management import deleteDrone
-from src.drone_management import changeDroneLoc
+from src.preloaded_data import getPackagesList
+from src.droneManagement.drone_management import getDronesSummary
+from src.droneManagement.drone_management import getNewDroneSummary
+from src.droneManagement.drone_management import deleteDrone
+from src.droneManagement.drone_management import changeDroneLoc
+from src.locationManagement.location_management import getLocationsSummary
+from src.locationManagement.location_management import getSkybasesSummary
+from src.locationManagement.location_management import addSkybase
+from src.locationManagement.location_management import removeSkybase
+from src.packageManagement.package_manager import createNewPackage
+from src.packageManagement.package_manager import getPackagesSummary
+from src.packageManagement.package_manager import deletePackage
 from src.input_check import checkBaseName
 from src.input_check import checkDroneName
 from src.input_check import checkLocationName
+from src.input_check import checkPackagesNamesForDelete
 
 #uri = "bolt://localhost:7687"
 #driver = GraphDatabase.driver(uri, auth=("neo4j", "AllsoP123098"))
@@ -35,7 +43,7 @@ while main_menu:
     Select one of options below:
 
     1.Drone management
-    2.Locations summary
+    2.Locations management
     3.Send a package!
     4.Refresh data
     5.Exit/Quit
@@ -91,10 +99,99 @@ while main_menu:
           drone_management = False
 
     elif ans=="2":
-      print("\n Locations summary: ")
+      print("\n Locations management: ")
+      locations_management = True
+      while locations_management:
+        print(
+          '''
+          Select option:
+          1. Locations summary
+          2. List of Skybases
+          3. Add Skybase
+          4. Remove Skybase
+          5. Return to Main menu
+          '''
+          )
+        select1 = input("What would you like to do? ")
+        if select1=="1":
+          print("Locations summary: \n")
+          locations_summary = getLocationsSummary()
+          print(locations_summary)
+          time.sleep(2)
+
+        if select1=="2":
+          print("List of Skybases: \n")
+          skybases_summary = getSkybasesSummary()
+          print(skybases_summary)
+          time.sleep(2)
+
+        if select1=="3":
+          print("Add Skybase: \n")
+          new_location = checkLocationName(getLocationNames())
+          skybases_summary = addSkybase(new_location)
+          print(skybases_summary)
+          time.sleep(2)
+
+        if select1=="4":
+          print("Remove Skybase: \n")
+          select_location = checkLocationName(getBasesNames())
+          skybases_summary = removeSkybase(select_location)
+          print(skybases_summary)
+          time.sleep(2)
+        
+        if select1=="5":
+          locations_management = False
 
     elif ans=="3":
       print("\n Send a package:")
+      package_manager = True
+      while package_manager:
+        print(
+          '''
+          Select option:
+          1. List all packages
+          2. Create new package
+          3. Delete package
+          4. Send package!
+          5. Return to Main menu
+          ''')
+        select1 = input("What would you like to do? ")
+        if select1=="1":
+          print("List all packages: \n")
+          '''Cypher Query'''
+          packages_summary = getPackagesSummary()
+          print(packages_summary)
+          time.sleep(2)
+
+        if select1=="2":
+          print("Create new package: \n")
+          new_package_summary = createNewPackage()
+          print(new_package_summary)
+          time.sleep(2)
+
+        if select1=="3":
+          print("Delete package: \n")
+          delete_package_name = checkPackagesNamesForDelete(getPackagesList())
+          delete_drone_summary = deletePackage(delete_package_name)
+          print(delete_drone_summary)
+          time.sleep(2)
+
+        if select1=="4":
+          print("Send package! \n")
+          new_location = checkLocationName(getLocationNames())
+          skybases_summary = addSkybase(new_location)
+          print(skybases_summary)
+          time.sleep(2)
+
+        if select1=="5":
+          package_manager = False
+
+
+
+
+
+
+
 
     elif ans=="4":
       print("\n Refresh data: ")

@@ -1,0 +1,43 @@
+I. Main Menu Plan:
+    1. Drone Management
+        1) Summary [OK]
+            - droneSummary()
+            
+        2) Add new drone [OK]
+            - getNewDroneSummary()
+            
+        3) Delete drone [OK]
+            - deleteDrone()
+            
+        4) Change drone location [OK]
+            - changeDroneLoc()
+            
+    2. Location Summary
+        1) Summary [OK]
+            - getLocationsSummary()
+            
+        2) Skybase list [OK]
+            - getSkybasesSummary()
+
+        2) Add Skybase [OK]
+            - addSkybase()
+
+        2) Remove Skybase [OK]
+            - removeSkybase()
+            
+    3. Send a package!
+        1) List all packages [OK]
+
+        2) Create new package [OK]
+
+        3) Delete package [OK]
+
+        4) Send package!
+            
+    4. Refresh data
+    5. Quit program
+    
+II. Global variables:
+    drone_list = getDroneNames()
+    location_list = getLocationNames()
+    base_list = getBasesNames()
