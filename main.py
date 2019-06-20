@@ -15,24 +15,17 @@ from src.locationManagement.location_management import removeSkybase
 from src.packageManagement.package_manager import createNewPackage
 from src.packageManagement.package_manager import getPackagesSummary
 from src.packageManagement.package_manager import deletePackage
+from src.packageManagement.package_manager import sendPackage
 from src.input_check import checkBaseName
 from src.input_check import checkDroneName
 from src.input_check import checkLocationName
 from src.input_check import checkPackagesNamesForDelete
-
-#uri = "bolt://localhost:7687"
-#driver = GraphDatabase.driver(uri, auth=("neo4j", "AllsoP123098"))
-#session = driver.session()
 
 drone_list = getDroneNames()
 location_list = getLocationNames()
 base_list = getBasesNames()
 
 print("Downloading start-up data..")
-
-#print(drone_list)
-#print(location_list)
-#print(base_list)
 
 main_menu = True
 while main_menu:
@@ -158,7 +151,6 @@ while main_menu:
         select1 = input("What would you like to do? ")
         if select1=="1":
           print("List all packages: \n")
-          '''Cypher Query'''
           packages_summary = getPackagesSummary()
           print(packages_summary)
           time.sleep(2)
@@ -171,17 +163,27 @@ while main_menu:
 
         if select1=="3":
           print("Delete package: \n")
-          delete_package_name = checkPackagesNamesForDelete(getPackagesList())
-          delete_drone_summary = deletePackage(delete_package_name)
-          print(delete_drone_summary)
-          time.sleep(2)
+          if (getPackagesList() != ("No packages defined! \n")):
+            delete_package_name = checkPackagesNamesForDelete(getPackagesList())
+            delete_drone_summary = deletePackage(delete_package_name)
+            print(delete_drone_summary)
+            time.sleep(2)
+          else:
+            print("No packages to delete!")
+            time.sleep(2)
+            continue
 
         if select1=="4":
           print("Send package! \n")
-          new_location = checkLocationName(getLocationNames())
-          skybases_summary = addSkybase(new_location)
-          print(skybases_summary)
-          time.sleep(2)
+          if (getPackagesList() != ("No packages defined! \n")):
+            package_to_send = checkPackagesNamesForDelete(getPackagesList())
+            send_package_summary = sendPackage(package_to_send)
+            print(send_package_summary)
+            time.sleep(2)
+          else:
+            print("No packages found! Create a new package to send it!")
+            time.sleep(2)
+            continue
 
         if select1=="5":
           package_manager = False

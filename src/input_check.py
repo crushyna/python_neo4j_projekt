@@ -122,7 +122,7 @@ def checkPackagesNamesForDelete(list):
     while True:
         try:
             print(list)
-            value = input("Enter package name: ")
+            value = input("Enter package name: ")                       
         except ValueError:
             print("Sorry, I didn't understand that.")
             continue
@@ -130,7 +130,7 @@ def checkPackagesNamesForDelete(list):
         if (value not in list):
             print("Sorry, this package doesn't exist!. \n")
             time.sleep(2)
-            continue
+            continue                
         else:
             break
     return value

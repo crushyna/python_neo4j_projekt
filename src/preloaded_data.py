@@ -39,6 +39,6 @@ def getPackagesList():
         ''')
         df = pd.DataFrame(result.data())
         if df.empty:
-                return ("No packages defined! \n")
+                return("No packages defined! \n")
         else:
                 return list(df['package_name'])

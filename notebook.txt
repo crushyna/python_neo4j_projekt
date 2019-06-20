@@ -1,0 +1,29 @@
+MATCH (n:Drone {name:$name})-[r:docked_at]->(b) 
+SET b.name = $location
+RETURN n.name AS drone_name, b.name AS docked_at
+
+MATCH (n)
+OPTIONAL MATCH (n)-[r]-()
+DELETE n,r
+
+MERGE (nextDrone:Drone {name:$name, battery_time:$battery_time, cargo:$cargo_hold})
+                                MERGE (nextDrone)-[:docked_at]->(a:Loc {name:$base, base:1})
+								
+'''
+                                CREATE (nextDrone:Drone {name:$name, battery_time:$battery_time, cargo:$cargo_hold})-[:docked_at]->(b:Loc {name:$base})
+                                RETURN nextDrone.name AS name, nextDrone.battery_time AS battery_time, nextDrone.cargo AS cargo_hold, b.name AS docked_at
+                            ''', name=drone_name, battery_time=battery_time, cargo_hold=cargo_hold, base=new_base)
+							
+MATCH (start:Loc{name:'Morasko N'}), (end:Loc{name:'Strzeszyn'})
+CALL algo.kShortestPaths.stream(start, end, 1, 'cost' ,{
+nodeQuery:'MATCH (n:Loc)-[r:TIME]-(m:Loc) WITH id(n) AS sources, id(m) AS targets, r.cost AS costs RETURN sources as source, targets as target, costs as weight'})
+YIELD index, nodeIds, costs
+RETURN [node in algo.getNodesById(nodeIds) | node.name] AS places,
+       costs,
+       reduce(acc = 0.0, cost in costs | acc + cost) AS totalCost
+
+MATCH (n:Loc)-[r:TIME]->(m:Loc) RETURN id(n) as source, id(m) as target, r.cost as weight
+
+MATCH (n:Loc)-[r:TIME]-(m:Loc)
+WITH id(n) AS sources, id(m) AS targets, r.cost AS costs
+RETURN sources as source, targets as target, costs as weight
