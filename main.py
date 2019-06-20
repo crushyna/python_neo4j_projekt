@@ -3,25 +3,28 @@ import time
 #from neo4j import GraphDatabase
 from src.preloaded_data import getDroneNames
 from src.preloaded_data import getLocationNames
+from src.preloaded_data import getBasesNames
 from src.drone_management import getDronesSummary
 from src.drone_management import getNewDroneSummary
 from src.drone_management import deleteDrone
-
-def refreshData():
-  drone_names = list(getDroneNames()['drone_name'])
-  #print(drone_names)
-  location_names = list(getLocationNames()['location_name'])
-  #print(location_names)
+from src.drone_management import changeDroneLoc
+from src.input_check import checkBaseName
+from src.input_check import checkDroneName
+from src.input_check import checkLocationName
 
 #uri = "bolt://localhost:7687"
 #driver = GraphDatabase.driver(uri, auth=("neo4j", "AllsoP123098"))
 #session = driver.session()
 
-drone_names = []
-location_names = []
+drone_list = getDroneNames()
+location_list = getLocationNames()
+base_list = getBasesNames()
 
 print("Downloading start-up data..")
-refreshData()
+
+#print(drone_list)
+#print(location_list)
+#print(base_list)
 
 main_menu = True
 while main_menu:
@@ -64,16 +67,24 @@ while main_menu:
           new_drone_name = input("Drone name: ")
           new_drone_battery_time = input("Battery time (minutes): ")
           new_drone_cargo_hold = input("Cargo hold (grams): ")
-          new_drone_base = input("Base name: ")
+          new_drone_base = checkBaseName(getBasesNames())
           new_drone_summary = getNewDroneSummary(new_drone_name, new_drone_battery_time, new_drone_cargo_hold, new_drone_base)
           print(new_drone_summary)
           time.sleep(2)
 
         if select1=="3":
           print("Delete drone: \n")
-          delete_drone_name = input("Drone name: ")
+          delete_drone_name = checkDroneName(getDroneNames())
           delete_drone = deleteDrone(delete_drone_name)
           print(delete_drone)
+          time.sleep(2)
+
+        if select1=="4":
+          print("Change drone location: \n")
+          drone_name = checkDroneName(getDroneNames())
+          new_location = checkLocationName(getBasesNames())
+          change_drone_location = changeDroneLoc(drone_name, new_location)
+          print(change_drone_location)
           time.sleep(2)
 
         if select1=="5":
@@ -87,7 +98,6 @@ while main_menu:
 
     elif ans=="4":
       print("\n Refresh data: ")
-      refreshData()
       print("Data refreshed! \n")
       time.sleep(2)
 

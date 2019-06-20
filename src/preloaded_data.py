@@ -10,8 +10,8 @@ def getDroneNames():
         MATCH (n:Drone) 
         RETURN n.name AS drone_name
         ''')
-        session.close()
-        return pd.DataFrame(result.data())
+        df = pd.DataFrame(result.data())
+        return list(df['drone_name'])
 
 def getLocationNames():
     with driver.session() as session:
@@ -19,5 +19,14 @@ def getLocationNames():
         MATCH (n:Loc) 
         RETURN n.name AS location_name
         ''')
-        session.close()
-        return pd.DataFrame(result.data())
+        df = pd.DataFrame(result.data())
+        return list(df['location_name'])
+
+def getBasesNames():
+    with driver.session() as session:
+        result = session.run('''
+        MATCH (n:Loc {base:1}) 
+        RETURN n.name AS location_name
+        ''')
+        df = pd.DataFrame(result.data())
+        return list(df['location_name'])

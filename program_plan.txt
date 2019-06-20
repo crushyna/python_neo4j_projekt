@@ -4,13 +4,13 @@ I. Main Menu Plan:
             - droneSummary()
             
         2) Add new drone [OK]
-            - droneAddNew()
+            - getNewDroneSummary()
             
-        3) Delete drone
-            - droneDelete()
+        3) Delete drone [OK]
+            - deleteDrone()
             
-        4) Change drone location
-            - droneUpdateLoc()
+        4) Change drone location [OK]
+            - changeDroneLoc()
             
     2. Location Summary
         1) Summary
