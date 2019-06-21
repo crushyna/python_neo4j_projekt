@@ -13,6 +13,16 @@ def getDroneNames():
         df = pd.DataFrame(result.data())
         return list(df['drone_name'])
 
+def getDroneNamesToFly():
+    with driver.session() as session:
+        result = session.run('''
+        MATCH (n:Drone)
+        WHERE n.in_travel = 0
+        RETURN n.name AS drone_name
+        ''')
+        df = pd.DataFrame(result.data())
+        return list(df['drone_name'])
+
 def getLocationNames():
     with driver.session() as session:
         result = session.run('''
@@ -35,6 +45,19 @@ def getPackagesList():
     with driver.session() as session:
         result = session.run('''
         MATCH (n:Package) 
+        RETURN n.name AS package_name
+        ''')
+        df = pd.DataFrame(result.data())
+        if df.empty:
+                return("No packages defined! \n")
+        else:
+                return list(df['package_name'])
+
+def getPackagesListToSend():
+    with driver.session() as session:
+        result = session.run('''
+        MATCH (n:Package) 
+        WHERE n.in_travel = 0
         RETURN n.name AS package_name
         ''')
         df = pd.DataFrame(result.data())

@@ -9,6 +9,7 @@ from src.preloaded_data import getLocationNames
 from src.preloaded_data import getPackagesList
 from src.input_check import checkDroneName
 from src.preloaded_data import getDroneNames
+from src.preloaded_data import getDroneNamesToFly
 from src.droneManagement.drone_management import totalFlyTime
 from src.droneManagement.drone_management import totalCargoHold
 from src.droneManagement.drone_management import getDroneCurrentBase
@@ -66,7 +67,7 @@ def sendPackage(name):
         weight = getPackageWeight(name)
         start = getPackageStart(name)
         dest = getPackageDestination(name)
-        selected_drone = checkDroneName(getDroneNames())
+        selected_drone = checkDroneName(getDroneNamesToFly())
         drone_total_fly_time = totalFlyTime(selected_drone)
         drone_total_cargo = totalCargoHold(selected_drone)
         if (weight > drone_total_cargo):
@@ -75,8 +76,8 @@ def sendPackage(name):
         
         drone_current_base = getDroneCurrentBase(selected_drone)
         fly_time_drone_to_pickup = getFlyTimeForPickup(drone_current_base, start)
-        fly_time_drone_to_return = getFlyTimeForReturn(dest, drone_current_base)
         package_fly_time_to_cover = getPackageFlyTime(start, dest)
+        fly_time_drone_to_return = getFlyTimeForReturn(dest, drone_current_base)
         total_required_fly_time = fly_time_drone_to_pickup + package_fly_time_to_cover + fly_time_drone_to_return
         print("Total required fly time: ")
         print(total_required_fly_time)
@@ -91,6 +92,7 @@ def sendPackage(name):
                 result = session.run('''
                                 MATCH (n:Drone {name:$drone_name}), (a)<-[r:delivery_from]-(p:Package {name:$package_name})-[s:delivery_to]->(b)
                                 SET n.in_travel = 1
+                                SET p.in_travel = 1
                                 CREATE (p)-[:carried_by]->(n)
                                 RETURN n.name AS drone_name, p.name AS package_name, a.name AS delivered_from, b.name AS delivered_to
                             ''', drone_name=selected_drone, package_name=package_name)
@@ -137,6 +139,9 @@ def getPackageFlyTime(start, dest):
                                 RETURN [node in algo.getNodesById(nodeIds) | node.name] AS places,costs, reduce(acc = 0.0, cost in costs | acc + cost) AS totalCost
                                 ''', start_loc=start, dest_loc=dest)
         df = pd.DataFrame(result.data())
+        print("Delivery fly-path: ")
+        print(df['places'].values[0])
+        time.sleep(2)
         return df['totalCost'].values[0]
 
 def getFlyTimeForPickup(start, dest):
@@ -151,6 +156,9 @@ def getFlyTimeForPickup(start, dest):
                                 RETURN [node in algo.getNodesById(nodeIds) | node.name] AS places,costs, reduce(acc = 0.0, cost in costs | acc + cost) AS totalCost
                                 ''', start_loc=start, dest_loc=dest)
         df = pd.DataFrame(result.data())
+        print("Pick-up fly-path: ")
+        print(df['places'].values[0])
+        time.sleep(2)
         return df['totalCost'].values[0]
 
 def getFlyTimeForReturn(start, dest):
@@ -165,4 +173,7 @@ def getFlyTimeForReturn(start, dest):
                                 RETURN [node in algo.getNodesById(nodeIds) | node.name] AS places,costs, reduce(acc = 0.0, cost in costs | acc + cost) AS totalCost
                                 ''', start_loc=start, dest_loc=dest)
         df = pd.DataFrame(result.data())
+        print("Return to base fly-path: ")
+        print(df['places'].values[0])
+        time.sleep(2)
         return df['totalCost'].values[0]

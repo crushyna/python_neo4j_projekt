@@ -25,8 +25,9 @@ def getNewDroneSummary(drone_name, battery_time, cargo_hold, new_base):
 def deleteDrone(drone_name):
     with driver.session() as session:
         result = session.run('''
-                                MATCH (n:Drone {name:$name})
-                                DETACH DELETE n
+                                MATCH (p:Package)-[r:carried_by]->(s:Drone {name:$name})
+                                SET p.in_travel = 0
+                                DETACH DELETE s
                             ''', name=drone_name)
         '''this need fixing'''
         return result.data()

@@ -4,6 +4,7 @@ from src.preloaded_data import getDroneNames
 from src.preloaded_data import getLocationNames
 from src.preloaded_data import getBasesNames
 from src.preloaded_data import getPackagesList
+from src.preloaded_data import getPackagesListToSend
 from src.droneManagement.drone_management import getDronesSummary
 from src.droneManagement.drone_management import getNewDroneSummary
 from src.droneManagement.drone_management import deleteDrone
@@ -38,8 +39,7 @@ while main_menu:
     1.Drone management
     2.Locations management
     3.Send a package!
-    4.Refresh data
-    5.Exit/Quit
+    4.Exit/Quit
     """)
     ans=input("What would you like to do? ")
 
@@ -175,8 +175,8 @@ while main_menu:
 
         if select1=="4":
           print("Send package! \n")
-          if (getPackagesList() != ("No packages defined! \n")):
-            package_to_send = checkPackagesNamesForDelete(getPackagesList())
+          if (getPackagesListToSend() != ("No packages defined! \n")):
+            package_to_send = checkPackagesNamesForDelete(getPackagesListToSend())
             send_package_summary = sendPackage(package_to_send)
             print(send_package_summary)
             time.sleep(2)
@@ -188,21 +188,11 @@ while main_menu:
         if select1=="5":
           package_manager = False
 
-
-
-
-
-
-
-
     elif ans=="4":
-      print("\n Refresh data: ")
-      print("Data refreshed! \n")
-      time.sleep(2)
-
-    elif ans=="5":
       print("\n Goodbye!")
       main_menu = None
+      time.sleep(2)
 
     else:
-       print("\n Not Valid Choice Try again")
+      print("\n Not valid choice, try again!")
+      time.sleep(2)

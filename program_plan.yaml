@@ -32,10 +32,9 @@ I. Main Menu Plan:
 
         3) Delete package [OK]
 
-        4) Send package!
+        4) Send package! [OK]
             
-    4. Refresh data
-    5. Quit program
+    4. Quit program
     
 II. Global variables:
     drone_list = getDroneNames()
