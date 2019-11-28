@@ -1,11 +1,10 @@
 import time
 
 
-class InputChecks():
-    # TODO make some decorators out of this!
+class InputChecks:
     """
-    this needs to be made into decorators.
-    for now, those are basic static methods
+    this might be turned into decorators, but imho its FUBAR
+    so for now, those are basic static methods
     """
 
     @staticmethod

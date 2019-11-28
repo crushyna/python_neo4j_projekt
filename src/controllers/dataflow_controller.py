@@ -4,12 +4,11 @@ from neo4j import GraphDatabase
 from src.input_check import InputChecks
 from src.preloaded_data import StartingData
 
-# TODO: get connection info from file, and make it more versatile!
 uri = "bolt://localhost:7687"
 driver = GraphDatabase.driver(uri, auth=("neo4j", "AllsoP123098"))
 
 
-class DroneController():
+class DroneController:
 
     @staticmethod
     def getDronesSummary():
@@ -83,7 +82,7 @@ class DroneController():
         return list(df['base_location'])[0]
 
 
-class LocationController():
+class LocationController:
 
     @staticmethod
     def getLocationsSummary():
@@ -124,7 +123,7 @@ class LocationController():
             return result.data()
 
 
-class PackageController():
+class PackageController:
 
     @staticmethod
     def getPackagesSummary():
@@ -137,40 +136,40 @@ class PackageController():
 
     @staticmethod
     def createNewPackage():
+        result = pd.DataFrame()
         while True:
             name = InputChecks.checkPackagesNames(StartingData.getPackagesList())
             weight = InputChecks.checkPackageWeight()
             start = InputChecks.checkStartPoint(StartingData.getLocationNames())
-            dest = InputChecks.checkDestinationPoint(StartingData.getLocationNames())
-            if start == dest:
+            destination = InputChecks.checkDestinationPoint(StartingData.getLocationNames())
+            if start == destination:
                 print("Start and destination are the same location! Try different!")
                 time.sleep(2)
                 continue
             else:
                 with driver.session() as session:
                     result = session.run('''
-                                    MATCH (a:Loc {name:$start}), (b:Loc {name:$dest})
+                                    MATCH (a:Loc {name:$start}), (b:Loc {name:$destination})
                                     CREATE (a)<-[:delivery_from]-(z:Package {name:$name, weight:$weight, in_travel:0})-[:delivery_to]->(b)
                                     RETURN z.name AS package_name, z.weight AS weight, a.name AS from_location, b.name AS to_location
-                                    ''', name=name, start=start, dest=dest, weight=weight)
+                                    ''', name=name, start=start, dest=destination, weight=weight)
                     return pd.DataFrame(result.data())
-                    break  # TODO: try to fix this 'break' issue here
         return pd.DataFrame(result.data())
 
     @staticmethod
     def deletePackage(package_name):
-        # TODO: revisit this method
+        """
+        this function first deletes all orders on package, and then deletes package itself
+        """
         with driver.session() as session:
-            result1 = session.run('''
+            session.run('''
                                     MATCH (n:Package {name:$name})-[r:carried_by]->(d)
                                     SET d.in_travel=0
                                 ''', name=package_name)
-            '''this need fixing'''
             result2 = session.run('''
                                     MATCH (n:Package {name:$name})
                                     DETACH DELETE n
                                 ''', name=package_name)
-            '''this need fixing'''
             return result2.data()
 
     @staticmethod
@@ -179,7 +178,7 @@ class PackageController():
             package_name = name
             weight = PackageController.getPackageWeight(name)
             start = PackageController.getPackageStart(name)
-            dest = PackageController.getPackageDestination(name)
+            destination = PackageController.getPackageDestination(name)
             selected_drone = InputChecks.checkDroneName(StartingData.getDroneNamesToFly())
             drone_total_fly_time = DroneController.totalFlyTime(selected_drone)
             drone_total_cargo = DroneController.totalCargoHold(selected_drone)
@@ -189,8 +188,8 @@ class PackageController():
 
             drone_current_base = DroneController.getDroneCurrentBase(selected_drone)
             fly_time_drone_to_pickup = PackageController.getFlyTimeForPickup(drone_current_base, start)
-            package_fly_time_to_cover = PackageController.getPackageFlyTime(start, dest)
-            fly_time_drone_to_return = PackageController.getFlyTimeForReturn(dest, drone_current_base)
+            package_fly_time_to_cover = PackageController.getPackageFlyTime(start, destination)
+            fly_time_drone_to_return = PackageController.getFlyTimeForReturn(destination, drone_current_base)
             total_required_fly_time = fly_time_drone_to_pickup + package_fly_time_to_cover + fly_time_drone_to_return
             print("Total required fly time: ")
             print(total_required_fly_time)

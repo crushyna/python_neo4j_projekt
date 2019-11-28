@@ -1,5 +1,11 @@
-from src.controllers.database_controller import *
+from neo4j import GraphDatabase
+from src.controllers.dataflow_controller import *
 from src.input_check import *
+from src.preloaded_data import StartingData
+
+uri = "bolt://localhost:7687"
+driver = GraphDatabase.driver(uri, auth=("neo4j", "AllsoP123098"))
+
 
 print("Downloading start-up data..")
 
@@ -48,7 +54,9 @@ while main_menu:
                 new_drone_battery_time = input("Battery time (minutes): ")
                 new_drone_cargo_hold = input("Cargo hold (grams): ")
                 new_drone_base = InputChecks.checkBaseName(StartingData.getBasesNames())
-                new_drone_summary = DroneController.getNewDroneSummary(new_drone_name, new_drone_battery_time, new_drone_cargo_hold,
+                new_drone_summary = DroneController.getNewDroneSummary(new_drone_name,
+                                                                       new_drone_battery_time,
+                                                                       new_drone_cargo_hold,
                                                                        new_drone_base)
                 print(new_drone_summary)
                 time.sleep(2)
@@ -169,6 +177,7 @@ while main_menu:
                 package_manager = False
 
     elif ans == "4":
+        driver.close()
         print("\n Goodbye!")
         main_menu = None
         time.sleep(2)

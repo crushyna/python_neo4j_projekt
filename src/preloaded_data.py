@@ -5,7 +5,7 @@ uri = "bolt://localhost:7687"
 driver = GraphDatabase.driver(uri, auth=("neo4j", "AllsoP123098"))
 
 
-class StartingData():
+class StartingData:
 
     @staticmethod
     def getDroneNames():
