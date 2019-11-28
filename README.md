@@ -1,4 +1,15 @@
-# python_neo4j_projekt
+# Python and Neo4j project
+  Example project utilizing Neo4j database in software, that is supposed to manage drone cargo around districts of Poznań City.
+  App was written in a haste and I had much less skills in Python.
+  Take it as an example app, not as a model.
+  
+  Currently code is total mess and fubar, but somehow works.
+  You'll require Neo4j database installed on your machine.
+  Name it 'Graph', and fill-in passwords in code variable 'driver'.
+
+
+# Original requirements (PL)
+-- python_neo4j_projekt
 
 Dodać do API:
 - parametryzacja
@@ -9,7 +20,7 @@ Dodać do API:
 Sprawozdanie:
 Implementacja: schemat jako typy węzłów, atrybuty i połączenia
 
-# oryginał wymagań:
+-- oryginał wymagań:
 
 Projekt
 • Wersja 1-osobowa
